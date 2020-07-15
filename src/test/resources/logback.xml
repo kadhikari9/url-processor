@@ -1,0 +1,15 @@
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS, US/Eastern} %-5level[%thread] %logger{1} - %msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <logger name="com.ebay.coding" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>
