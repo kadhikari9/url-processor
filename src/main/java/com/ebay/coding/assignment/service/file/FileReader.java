@@ -1,4 +1,4 @@
-package com.ebay.coding.assignment.file;
+package com.ebay.coding.assignment.service.file;
 
 import java.io.FilenameFilter;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.ebay.coding.assignment.file;
+package com.ebay.coding.assignment.service.file;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,13 +34,16 @@ public class GZipFileReader implements FileReader {
 
             } catch (IOException ex) {
                 log.error("Error processing Zip Input Stream:{}", ex.getMessage());
+                throw new RuntimeException(ex);
             }
-
-        } catch (IOException ex) {
-            log.error("Error reading file from path:{}, error:{}", path, ex.getMessage());
+            //shouldn't reach here
+        } catch (IOException ioException) {
+            log.error("Error reading file from path:{}, error:{}", path, ioException.getMessage());
+            throw new RuntimeException(ioException);
+        } catch (Exception ex) {
+            throw new RuntimeException("Exception reading directory on path:" + path);
         }
 
-        return Collections.emptyList();
     }
 
     @Override
