@@ -13,9 +13,9 @@ import java.util.concurrent.*;
 /**
  * File Processor that reads file contents on directory
  */
-public class AsyncProcessor implements Processor {
+public class AsyncFileProcessor implements Processor {
 
-    private static final Logger logger = LoggerFactory.getLogger(SimpleUrlProcessor.class);
+    private static final Logger logger = LoggerFactory.getLogger(AsyncFileProcessor.class);
     private final FileReader fileReader;
     private final LinkedBlockingQueue<String> fileProcessingQueue;
     private final LinkedBlockingQueue<String> urlProcessingQueue;
@@ -23,8 +23,8 @@ public class AsyncProcessor implements Processor {
     private final ExecutorService worker = Executors.newFixedThreadPool(1);
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-    public AsyncProcessor(final FileReader fileReader, final LinkedBlockingQueue<String> fileProcessingQueue,
-                          final LinkedBlockingQueue<String> urlProcessingQueue, final DeadLetterQueue deadLetterQueue) {
+    public AsyncFileProcessor(final FileReader fileReader, final LinkedBlockingQueue<String> fileProcessingQueue,
+                              final LinkedBlockingQueue<String> urlProcessingQueue, final DeadLetterQueue deadLetterQueue) {
         this.fileReader = fileReader;
         this.fileProcessingQueue = fileProcessingQueue;
         this.urlProcessingQueue = urlProcessingQueue;
@@ -65,8 +65,9 @@ public class AsyncProcessor implements Processor {
 
     private void addToQueue(List<String> urls) {
         try {
-            for (String file : urls) {
-                urlProcessingQueue.put(file);
+            for (String url : urls) {
+                logger.info("Adding new url:{} to processing queue", url);
+                urlProcessingQueue.put(url);
             }
         } catch (InterruptedException ex) {
             logger.error("Thread interrupted while processing:{}", ex.getMessage());

@@ -45,12 +45,14 @@ public class AsyncDirectoryProcessor implements Processor {
     }
 
     private boolean validateFile(int maxSize, File file, String name) {
+        // Skip, large files
         return file.length() > 0 && file.length() <= maxSize && name.endsWith(".gz");
     }
 
     private void addToQueue(List<String> urlFiles) {
         try {
             for (String file : urlFiles) {
+                logger.info("Adding new url file to the processing queue:{}", file);
                 fileProcessingQueue.put(file);
             }
         } catch (InterruptedException ex) {
