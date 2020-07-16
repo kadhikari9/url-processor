@@ -11,11 +11,12 @@ import java.util.List;
 
 public class GZipFileReaderTest {
 
+    private FileReader fileReader = GZipFileReader.INSTANCE;
+
     @Test
     public void testReadDirectory() {
-        FileReader fileReader = new GZipFileReader();
-        String basePath = PropertyUtil.INSTANCE.getProperty("url.files.path");
 
+        String basePath = PropertyUtil.INSTANCE.getProperty("url.files.path");
         FilenameFilter filenameFilter = (dir, name) -> name.endsWith(".gz") && dir.length() > 0 && dir.lastModified() > 0;
 
         List<String> result = fileReader.listFiles(basePath, filenameFilter);
@@ -25,7 +26,6 @@ public class GZipFileReaderTest {
 
     @Test
     public void testReadZipFiles() {
-        FileReader fileReader = new GZipFileReader();
         String basePath = PropertyUtil.INSTANCE.getProperty("url.files.path");
         List<String> urls = fileReader.readFile(basePath + "url.0.gz");
         Assert.assertNotNull(urls);

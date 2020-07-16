@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 
+/**
+ * File Reader implementation which reads GZip files or can get list of directories
+ */
 public enum  GZipFileReader implements FileReader {
     INSTANCE;
 

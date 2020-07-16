@@ -15,6 +15,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
 
+/**
+ * Simple implementation of http service to perform Http GET operation to url endpoint
+ */
 public enum SimpleHttpService implements HttpService {
     INSTANCE;
 

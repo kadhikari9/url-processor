@@ -2,6 +2,9 @@ package com.ebay.coding.assignment.service.event;
 
 import com.ebay.coding.assignment.dto.Event;
 
+/**
+ * Subscriber interface
+ */
 public interface Subscriber {
 
      /**

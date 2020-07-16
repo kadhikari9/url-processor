@@ -13,6 +13,9 @@ import com.ebay.coding.assignment.service.url.UrlProcessor;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * Singleton Factory class to create instances of all services used in this application
+ */
 public enum ServiceFactory {
     INSTANCE;
 
