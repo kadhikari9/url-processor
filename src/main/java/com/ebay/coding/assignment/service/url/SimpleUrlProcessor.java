@@ -21,7 +21,7 @@ public class SimpleUrlProcessor implements UrlProcessor, Publisher {
     private static final Logger logger = LoggerFactory.getLogger(SimpleUrlProcessor.class);
     private final LinkedBlockingQueue<String> urlProcessingQueue;
     private final DeadLetterQueue deadLetterQueue;
-    private final ExecutorService worker = Executors.newFixedThreadPool(1);
+    private final ExecutorService worker = Executors.newFixedThreadPool(2);
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private final HttpService httpService;
 
@@ -56,26 +56,27 @@ public class SimpleUrlProcessor implements UrlProcessor, Publisher {
     private boolean process() {
         try {
             logger.info("Processing url from UrlProcessingQueue");
-            String urlFile = urlProcessingQueue.take();
+            String url = urlProcessingQueue.take();
 
-            String resp = httpService.doGet(urlFile, Collections.emptyMap());
+            String resp = httpService.doGet(url, Collections.emptyMap());
             if (resp != null && !resp.isEmpty()) {
-                logger.info("Successfully processed url:{}, response:{}", urlFile, resp);
-                deadLetterQueue.remove(urlFile);
+                logger.info("Successfully processed url:{}, response:{}", url, resp);
+                deadLetterQueue.remove(url);
 
                 return true;
             } else {
-                logger.error("Failed processing url:{}", urlFile);
+                logger.error("Failed processing url:{}", url);
                 if (deadLetterQueue.isFull()) {
                     // queue is full too many failures, need to send alert to developers
                     logger.error("Dead letter queue is full. ");
                 }
 
-                DeadLetter deadLetter = deadLetterQueue.getOrDefault(urlFile, new DeadLetter());
+                DeadLetter deadLetter = deadLetterQueue.getOrDefault(url, new DeadLetter());
                 deadLetter.setAttempts(deadLetter.getAttempts() + 1);
                 deadLetter.setType(DeadLetter.Type.URL);
-                deadLetter.setValue(urlFile);
-                deadLetterQueue.put(urlFile, deadLetter);
+                deadLetter.setValue(url);
+                logger.info("Adding url:{} to dead Letter for re-processing",url);
+                deadLetterQueue.put(url, deadLetter);
 
                 return false;
             }

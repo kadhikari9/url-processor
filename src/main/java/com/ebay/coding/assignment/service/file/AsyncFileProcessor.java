@@ -2,7 +2,6 @@ package com.ebay.coding.assignment.service.file;
 
 import com.ebay.coding.assignment.dto.DeadLetter;
 import com.ebay.coding.assignment.dto.DeadLetterQueue;
-import com.ebay.coding.assignment.service.url.SimpleUrlProcessor;
 import com.ebay.coding.assignment.util.PropertyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

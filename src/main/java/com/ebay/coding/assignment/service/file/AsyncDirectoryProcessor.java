@@ -19,10 +19,13 @@ public class AsyncDirectoryProcessor implements Processor {
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     private final Executor worker = Executors.newFixedThreadPool(1);
     private final LinkedBlockingQueue<String> fileProcessingQueue;
+    private final int maxQueueSize;
 
     public AsyncDirectoryProcessor(FileReader fileReader, LinkedBlockingQueue<String> fileProcessingQueue) {
         this.fileReader = fileReader;
         this.fileProcessingQueue = fileProcessingQueue;
+        String maxFileQueue = PropertyUtil.INSTANCE.getProperty("max.file.processing.queue.size", "5");
+        maxQueueSize = Integer.parseInt(maxFileQueue);
     }
 
     @Override
@@ -31,6 +34,12 @@ public class AsyncDirectoryProcessor implements Processor {
         String pollInterval = PropertyUtil.INSTANCE.getProperty("directory.processor.poll.interval", "60");
 
         scheduler.scheduleAtFixedRate(() -> {
+            if (fileProcessingQueue.size() > 0.9 * maxQueueSize) {
+                logger.info("Processing queue is almost full. Skipping...");
+                return;
+            }
+
+            logger.info("Reading directory for new files...");
             String basePath = PropertyUtil.INSTANCE.getProperty("url.files.path");
             String maxFileSize = PropertyUtil.INSTANCE.getProperty("max.file.size", "8192");
 

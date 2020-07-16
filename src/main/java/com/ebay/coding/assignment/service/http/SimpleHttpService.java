@@ -29,9 +29,9 @@ public enum SimpleHttpService implements HttpService {
     }
 
     private void init() {
-        String connectTimeout = PropertyUtil.INSTANCE.getProperty("http.connect.timeout", "1000");
-        String readTimeout = PropertyUtil.INSTANCE.getProperty("http.read.timeout", "5000");
-        String socketTimeout = PropertyUtil.INSTANCE.getProperty("http.read.timeout", "2000");
+        String connectTimeout = PropertyUtil.INSTANCE.getProperty("http.connect.timeout", "500");
+        String readTimeout = PropertyUtil.INSTANCE.getProperty("http.read.timeout", "2000");
+        String socketTimeout = PropertyUtil.INSTANCE.getProperty("http.read.timeout", "1000");
         String maxConnecions = PropertyUtil.INSTANCE.getProperty("http.max.connections", "100");
 
         RequestConfig config = RequestConfig.custom()
