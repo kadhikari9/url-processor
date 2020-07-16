@@ -9,11 +9,14 @@ import java.io.FilenameFilter;
 import java.util.List;
 import java.util.concurrent.*;
 
-public class AsyncDirectoryProcessor implements FileProcessor {
+/**
+ * Directory processor that reads the new files on directory and put them for processing
+ */
+public class AsyncDirectoryProcessor implements Processor {
 
     private static final Logger logger = LoggerFactory.getLogger(AsyncDirectoryProcessor.class);
     private final FileReader fileReader;
-    private final ScheduledExecutorService schedular = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     private final Executor worker = Executors.newFixedThreadPool(1);
     private final LinkedBlockingQueue<String> fileProcessingQueue;
 
@@ -27,7 +30,7 @@ public class AsyncDirectoryProcessor implements FileProcessor {
         logger.info("Starting directory processor...");
         String pollInterval = PropertyUtil.INSTANCE.getProperty("directory.processor.poll.interval", "60");
 
-        schedular.scheduleAtFixedRate(() -> {
+        scheduler.scheduleAtFixedRate(() -> {
             String basePath = PropertyUtil.INSTANCE.getProperty("url.files.path");
             String maxFileSize = PropertyUtil.INSTANCE.getProperty("max.file.size", "8192");
 

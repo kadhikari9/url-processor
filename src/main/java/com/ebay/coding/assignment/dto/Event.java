@@ -4,5 +4,5 @@ public interface Event {
 
     String getName();
 
-    EventType type();
+    EventType getType();
 }

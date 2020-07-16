@@ -1,6 +1,8 @@
 package com.ebay.coding.assignment.service.url;
 
-public interface UrlProcessor {
+import com.ebay.coding.assignment.service.file.Processor;
+
+public interface UrlProcessor extends Processor {
 
     void processUrl();
 

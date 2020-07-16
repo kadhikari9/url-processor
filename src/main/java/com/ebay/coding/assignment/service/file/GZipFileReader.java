@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 
-public class GZipFileReader implements FileReader {
+public enum  GZipFileReader implements FileReader {
+    INSTANCE;
 
     private static final Logger log = LoggerFactory.getLogger(GZipFileReader.class);
 

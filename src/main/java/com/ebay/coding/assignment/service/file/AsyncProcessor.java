@@ -10,7 +10,10 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.concurrent.*;
 
-public class AsyncFileProcessor implements FileProcessor {
+/**
+ * File Processor that reads file contents on directory
+ */
+public class AsyncProcessor implements Processor {
 
     private static final Logger logger = LoggerFactory.getLogger(SimpleUrlProcessor.class);
     private final FileReader fileReader;
@@ -20,8 +23,8 @@ public class AsyncFileProcessor implements FileProcessor {
     private final ExecutorService worker = Executors.newFixedThreadPool(1);
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-    public AsyncFileProcessor(final FileReader fileReader, final LinkedBlockingQueue<String> fileProcessingQueue,
-                              final LinkedBlockingQueue<String> urlProcessingQueue, final DeadLetterQueue deadLetterQueue) {
+    public AsyncProcessor(final FileReader fileReader, final LinkedBlockingQueue<String> fileProcessingQueue,
+                          final LinkedBlockingQueue<String> urlProcessingQueue, final DeadLetterQueue deadLetterQueue) {
         this.fileReader = fileReader;
         this.fileProcessingQueue = fileProcessingQueue;
         this.urlProcessingQueue = urlProcessingQueue;
