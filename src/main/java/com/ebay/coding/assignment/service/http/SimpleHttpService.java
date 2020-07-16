@@ -63,6 +63,9 @@ public enum SimpleHttpService implements HttpService {
                 return respStr.length() == 0 ? "200 OK" : respStr.toString();
             }
 
+            logger.error("Invalid status code:{} from server for url:{}, reason:{}", response.getStatusLine().getStatusCode(),
+                    url, response.getStatusLine().getReasonPhrase());
+
         } catch (Exception ex) {
             logger.error("Error calling http url:{}, error:{}", url, ex.getMessage());
         }

@@ -42,5 +42,5 @@ and place on the directory configured on application.properties file
 <br/>
 - After build is complete go to target folder
 <br/>
-- java -jar url-processor-1.0-SNAPSHOT-jar-with-dependencies.jar 
+- Run command: java -jar url-processor-1.0-SNAPSHOT-jar-with-dependencies.jar 
 </p>
