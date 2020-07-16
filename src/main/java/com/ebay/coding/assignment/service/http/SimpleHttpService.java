@@ -60,7 +60,7 @@ public enum SimpleHttpService implements HttpService {
                 while ((line = reader.readLine()) != null) {
                     respStr.append(line);
                 }
-                return respStr.length() == 0 ? "OK" : respStr.toString();
+                return respStr.length() == 0 ? "200 OK" : respStr.toString();
             }
 
         } catch (Exception ex) {
