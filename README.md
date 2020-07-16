@@ -21,9 +21,12 @@ Pre-steps:
 # Update properties, url.files.path and url.files.processed.path accordingly in
 application.properties file before building
 <br/>
-# There is a bash script provided which will listen to new flies in directory, decompress them and split to max chunks of 10MB. Each file can have max 2500 
+# There is a bash script provided on src/main/resources/scripts/splitter.sh, 
+which will listen to new flies in directory, decompress them and split to max chunks of 10MB. Each file can have max 2500 
 lines of urls at max. If all url are of max length total file size can be max 10MB.
-This is to avoid reading large files.
+This is to avoid reading large files into memory. Place this script on same directory where URL files are supposed to uploaded and run the script using command,
+chmod a+x splitter.sh
+./splitter.sh
 <br/>
 # To use this script install inotify tools on your linux machine. 
 <br/>
