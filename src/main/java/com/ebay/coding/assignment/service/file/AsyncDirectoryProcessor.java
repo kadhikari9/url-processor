@@ -55,7 +55,7 @@ public class AsyncDirectoryProcessor implements Processor {
 
     private boolean validateFile(int maxSize, File file, String name) {
         // Skip, large files and read only .txt files
-        return file.length() > 0 && file.length() <= maxSize && name.endsWith(".txt");
+        return file.length() > 0 && file.length() <= maxSize;
     }
 
     private void addToQueue(List<String> urlFiles) {
