@@ -69,6 +69,7 @@ public class SimpleUrlProcessor implements UrlProcessor, Publisher {
                 if (deadLetterQueue.isFull()) {
                     // queue is full too many failures, need to send alert to developers
                     logger.error("Dead letter queue is full. ");
+                    publish(new UrlProcessingEvent(EventType.TOO_MANY_FAILURES));
                 }
 
                 DeadLetter deadLetter = deadLetterQueue.getOrDefault(url, new DeadLetter());

@@ -53,6 +53,8 @@ public class SimpleEventReporter implements EventReporter, Subscriber {
             case URL_PROCESSING_SUCCESS:
                 totalSuccess.incrementAndGet();
                 break;
+            case TOO_MANY_FAILURES:
+                logger.error("Too many failures processing URL. Trigger call to on-call person.");
             default:
                 break;
         }
