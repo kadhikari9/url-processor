@@ -48,7 +48,7 @@ public class AsyncFileProcessor implements FileProcessor {
                 logger.error("Exception occured while reading file:{}, adding to deadletter.", filePath);
                 DeadLetter deadLetter = deadLetterQueue.getOrDefault(filePath, new DeadLetter());
                 deadLetter.setAttempts(deadLetter.getAttempts() + 1);
-                deadLetter.setType(DeadLetter.Type.URL);
+                deadLetter.setType(DeadLetter.Type.FILE);
                 deadLetter.setValue(filePath);
                 deadLetterQueue.put(filePath, deadLetter);
 

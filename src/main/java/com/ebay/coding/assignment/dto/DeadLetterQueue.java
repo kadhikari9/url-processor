@@ -5,6 +5,7 @@ import com.ebay.coding.assignment.util.PropertyUtil;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Least Recently used Cache for storing failed urls/files
@@ -35,6 +36,10 @@ public class DeadLetterQueue {
         lruCache.put(key, value);
     }
 
+    public Set<Map.Entry<String, DeadLetter>> entrySet() {
+        return lruCache.entrySet();
+    }
+
     public DeadLetter get(String key) {
         return lruCache.get(key);
     }
@@ -56,10 +61,8 @@ public class DeadLetterQueue {
 
         @Override
         protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
-
             return (this.size() > max); //must override it if used in a fixed cache
         }
-
     }
 
 }
