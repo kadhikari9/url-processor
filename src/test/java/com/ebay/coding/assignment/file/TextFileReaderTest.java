@@ -1,7 +1,7 @@
 package com.ebay.coding.assignment.file;
 
 import com.ebay.coding.assignment.service.file.FileReader;
-import com.ebay.coding.assignment.service.file.GZipFileReader;
+import com.ebay.coding.assignment.service.file.TextFileReader;
 import com.ebay.coding.assignment.util.PropertyUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,9 +9,9 @@ import org.junit.Test;
 import java.io.FilenameFilter;
 import java.util.List;
 
-public class GZipFileReaderTest {
+public class TextFileReaderTest {
 
-    private FileReader fileReader = GZipFileReader.INSTANCE;
+    private FileReader fileReader = TextFileReader.INSTANCE;
 
     @Test
     public void testReadDirectory() {

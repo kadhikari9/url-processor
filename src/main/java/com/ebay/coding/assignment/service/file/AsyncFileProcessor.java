@@ -33,7 +33,7 @@ public class AsyncFileProcessor implements Processor {
     @Override
     public void startProcessor() {
         logger.info("Starting File Processor...");
-        String pollInterval = PropertyUtil.INSTANCE.getProperty("file.processor.poll.interval", "1");
+        String pollInterval = PropertyUtil.INSTANCE.getProperty("file.processor.poll.interval", "30");
 
         scheduler.scheduleAtFixedRate(this::process, 10, Integer.parseInt(pollInterval), TimeUnit.SECONDS);
     }

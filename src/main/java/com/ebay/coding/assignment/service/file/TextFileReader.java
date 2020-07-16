@@ -14,10 +14,10 @@ import java.util.zip.GZIPInputStream;
 /**
  * File Reader implementation which reads GZip files or can get list of directories
  */
-public enum  GZipFileReader implements FileReader {
+public enum TextFileReader implements FileReader {
     INSTANCE;
 
-    private static final Logger log = LoggerFactory.getLogger(GZipFileReader.class);
+    private static final Logger log = LoggerFactory.getLogger(TextFileReader.class);
 
     @Override
     public List<String> readFile(String path) {
@@ -27,19 +27,13 @@ public enum  GZipFileReader implements FileReader {
         try (InputStream fileInputStream = new FileInputStream(path)) {
             log.info("Reading file from path:{}", path);
 
-            try (GZIPInputStream gzipInputStream = new GZIPInputStream(fileInputStream)) {
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(gzipInputStream));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    result.add(line);
-                }
-                return result;
-
-            } catch (IOException ex) {
-                log.error("Error processing Zip Input Stream:{}", ex.getMessage());
-                throw new RuntimeException(ex);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.add(line);
             }
+            return result;
+
             //shouldn't reach here
         } catch (IOException ioException) {
             log.error("Error reading file from path:{}, error:{}", path, ioException.getMessage());

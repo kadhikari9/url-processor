@@ -5,7 +5,7 @@ import com.ebay.coding.assignment.service.event.SimpleEventReporter;
 import com.ebay.coding.assignment.service.file.AsyncDirectoryProcessor;
 import com.ebay.coding.assignment.service.file.AsyncFileProcessor;
 import com.ebay.coding.assignment.service.file.Processor;
-import com.ebay.coding.assignment.service.file.GZipFileReader;
+import com.ebay.coding.assignment.service.file.TextFileReader;
 import com.ebay.coding.assignment.service.http.SimpleHttpService;
 import com.ebay.coding.assignment.service.url.DeadLetterProcessor;
 import com.ebay.coding.assignment.service.url.SimpleUrlProcessor;
@@ -34,10 +34,10 @@ public enum ServiceFactory {
 
     public Processor getFileProcessor(String type) {
         if (type.equalsIgnoreCase("file")) {
-            return new AsyncFileProcessor(GZipFileReader.INSTANCE, fileProcessingQueue, urlProcessingQueue, deadLetterQueue);
+            return new AsyncFileProcessor(TextFileReader.INSTANCE, fileProcessingQueue, urlProcessingQueue, deadLetterQueue);
         }
         if (type.equalsIgnoreCase("directory")) {
-            return new AsyncDirectoryProcessor(GZipFileReader.INSTANCE, fileProcessingQueue);
+            return new AsyncDirectoryProcessor(TextFileReader.INSTANCE, fileProcessingQueue);
         }
 
         throw new UnsupportedOperationException("Unsupported file processor type");
