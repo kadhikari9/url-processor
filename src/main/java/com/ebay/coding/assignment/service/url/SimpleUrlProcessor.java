@@ -59,7 +59,7 @@ public class SimpleUrlProcessor implements UrlProcessor, Publisher {
             String url = urlProcessingQueue.take();
 
             String resp = httpService.doGet(url, Collections.emptyMap());
-            if (resp != null) {
+            if (resp != null && !resp.isEmpty()) {
                 logger.info("Successfully processed url:{}, response:{}", url, resp);
                 deadLetterQueue.remove(url);
 
