@@ -50,7 +50,7 @@ public class AsyncDirectoryProcessor implements Processor {
                 return val;
             });
 
-        }, 10, Integer.parseInt(pollInterval), TimeUnit.SECONDS);
+        }, 5, Integer.parseInt(pollInterval), TimeUnit.SECONDS);
     }
 
     private boolean validateFile(int maxSize, File file, String name) {

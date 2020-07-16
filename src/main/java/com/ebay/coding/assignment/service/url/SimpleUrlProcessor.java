@@ -37,7 +37,7 @@ public class SimpleUrlProcessor implements UrlProcessor, Publisher {
         logger.info("Starting Url Processor...");
         String pollInterval = PropertyUtil.INSTANCE.getProperty("url.processor.poll.interval", "1");
 
-        scheduler.scheduleAtFixedRate(this::processUrl, 10, Integer.parseInt(pollInterval), TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this::processUrl, 5, Integer.parseInt(pollInterval), TimeUnit.SECONDS);
 
     }
 

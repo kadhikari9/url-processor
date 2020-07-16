@@ -12,6 +12,6 @@ public class HttpServiceTest {
     public void testHttp() {
         String resp = SimpleHttpService.INSTANCE.doGet("http://127.0.0.1:8080/e?a=582009481", Collections.emptyMap());
         Assert.assertNotNull(resp);
-        Assert.assertTrue(resp.isEmpty());
+        Assert.assertFalse(resp.isEmpty());
     }
 }
