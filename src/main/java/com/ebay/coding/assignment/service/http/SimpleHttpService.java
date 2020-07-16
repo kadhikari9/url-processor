@@ -32,7 +32,7 @@ public enum SimpleHttpService implements HttpService {
         String connectTimeout = PropertyUtil.INSTANCE.getProperty("http.connect.timeout", "500");
         String readTimeout = PropertyUtil.INSTANCE.getProperty("http.read.timeout", "2000");
         String socketTimeout = PropertyUtil.INSTANCE.getProperty("http.read.timeout", "1000");
-        String maxConnecions = PropertyUtil.INSTANCE.getProperty("http.max.connections", "100");
+        String maxConnections = PropertyUtil.INSTANCE.getProperty("http.max.connections", "500");
 
         RequestConfig config = RequestConfig.custom()
                 .setConnectTimeout(Integer.parseInt(connectTimeout))
@@ -41,7 +41,7 @@ public enum SimpleHttpService implements HttpService {
                 .build();
         PoolingHttpClientConnectionManager connManager = new
                 PoolingHttpClientConnectionManager();
-        connManager.setMaxTotal(Integer.parseInt(maxConnecions));
+        connManager.setMaxTotal(Integer.parseInt(maxConnections));
 
         httpClient = HttpClientBuilder.create().setConnectionManager(connManager).setDefaultRequestConfig(config).build();
     }
