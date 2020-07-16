@@ -59,7 +59,7 @@ public class SimpleUrlProcessor implements UrlProcessor, Publisher {
             String url = urlProcessingQueue.take();
 
             String resp = httpService.doGet(url, Collections.emptyMap());
-            if (resp != null && !resp.isEmpty()) {
+            if (resp != null) {
                 logger.info("Successfully processed url:{}, response:{}", url, resp);
                 deadLetterQueue.remove(url);
 
@@ -75,7 +75,7 @@ public class SimpleUrlProcessor implements UrlProcessor, Publisher {
                 deadLetter.setAttempts(deadLetter.getAttempts() + 1);
                 deadLetter.setType(DeadLetter.Type.URL);
                 deadLetter.setValue(url);
-                logger.info("Adding url:{} to dead Letter for re-processing",url);
+                logger.info("Adding url:{} to dead Letter for re-processing", url);
                 deadLetterQueue.put(url, deadLetter);
 
                 return false;

@@ -48,9 +48,9 @@ public enum SimpleHttpService implements HttpService {
 
     @Override
     public String doGet(String url, Map<String, String> params) {
-        try (CloseableHttpClient closeableHttpClient = httpClient) {
+        try {
             HttpGet httpGet = new HttpGet(url);
-            HttpResponse response = closeableHttpClient.execute(httpGet);
+            HttpResponse response = httpClient.execute(httpGet);
             if (response.getStatusLine().getStatusCode() == 200) {
                 InputStream io = response.getEntity().getContent();
 
@@ -64,7 +64,7 @@ public enum SimpleHttpService implements HttpService {
             }
 
         } catch (Exception ex) {
-            logger.error("Error calling http url:{}", url);
+            logger.error("Error calling http url:{}, error:{}", url, ex.getMessage());
         }
 
         return null;
