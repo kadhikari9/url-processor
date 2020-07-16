@@ -19,6 +19,7 @@ public class DeadLetterProcessor {
     private static final Logger logger = LoggerFactory.getLogger(DeadLetterProcessor.class);
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private final ExecutorService worker = Executors.newFixedThreadPool(1);
     private final DeadLetterQueue deadLetterQueue;
     private final int maxAttempts;
     private final LinkedBlockingQueue<String> urlProcessingQueue;
@@ -38,10 +39,14 @@ public class DeadLetterProcessor {
         logger.info("Starting Url Processor...");
         String pollInterval = PropertyUtil.INSTANCE.getProperty("deadlettter.processor.poll.interval", "60");
 
-        scheduler.scheduleAtFixedRate(this::process, 10, Integer.parseInt(pollInterval), TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this::run, 10, Integer.parseInt(pollInterval), TimeUnit.SECONDS);
     }
 
-    private void process() {
+    private void run() {
+        CompletableFuture.supplyAsync(this::process, worker);
+    }
+
+    private boolean process() {
         try {
             Set<String> removeList = new HashSet<>();
 
@@ -63,8 +68,12 @@ public class DeadLetterProcessor {
             }
 
             removeList.forEach(deadLetterQueue::remove);
+
+            return true;
         } catch (InterruptedException ex) {
             logger.info("Thread interuptted while execution:{}", ex.getMessage());
         }
+
+        return false;
     }
 }
