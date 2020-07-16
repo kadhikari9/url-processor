@@ -41,7 +41,7 @@ public class AsyncDirectoryProcessor implements Processor {
 
             logger.info("Reading directory for new files...");
             String basePath = PropertyUtil.INSTANCE.getProperty("url.files.path");
-            String maxFileSize = PropertyUtil.INSTANCE.getProperty("max.file.size", "10");
+            String maxFileSize = PropertyUtil.INSTANCE.getProperty("max.file.size", "10000000");
 
             FilenameFilter filenameFilter = (file, name) -> validateFile(Integer.parseInt(maxFileSize), file, name);
 
@@ -54,9 +54,8 @@ public class AsyncDirectoryProcessor implements Processor {
     }
 
     private boolean validateFile(int maxSize, File file, String name) {
-        // Skip, large files
-        return file.length() > 0 && file.length() <= maxSize ;
-        //&& name.endsWith(".gz");
+        // Skip, large files and read only .txt files
+        return file.length() > 0 && file.length() <= maxSize && name.endsWith(".txt");
     }
 
     private void addToQueue(List<String> urlFiles) {

@@ -46,6 +46,8 @@ public class AsyncFileProcessor implements Processor {
             CompletableFuture.supplyAsync(() -> fileReader.readFile(filePath), worker).thenApply(val -> {
                 addToQueue(val);
                 return val;
+            }).thenApply(val -> {
+                return fileReader.moveFiles(filePath);
             }).exceptionally(throwable -> {
                 logger.error("Exception occured while reading file:{}, adding to deadletter.", filePath);
                 DeadLetter deadLetter = deadLetterQueue.getOrDefault(filePath, new DeadLetter());

@@ -19,4 +19,9 @@ public interface FileReader {
      */
     List<String> listFiles(String path, FilenameFilter filenameFilter);
 
+    /**
+     * Move the files which is read and added for processing so that it wont be read again.
+     * @param originalFile original file
+     */
+    boolean moveFiles(String originalFile);
 }
