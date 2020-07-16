@@ -37,7 +37,7 @@ public class DeadLetterProcessor {
     public void startProcessor() {
 
         logger.info("Starting Url Processor...");
-        String pollInterval = PropertyUtil.INSTANCE.getProperty("deadlettter.processor.poll.interval", "60");
+        String pollInterval = PropertyUtil.INSTANCE.getProperty("deadlettter.processor.poll.interval", "10");
 
         scheduler.scheduleAtFixedRate(this::run, 5, Integer.parseInt(pollInterval), TimeUnit.SECONDS);
     }
