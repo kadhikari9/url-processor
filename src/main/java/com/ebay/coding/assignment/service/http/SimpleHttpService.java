@@ -1,6 +1,7 @@
 package com.ebay.coding.assignment.service.http;
 
 import com.ebay.coding.assignment.util.PropertyUtil;
+import io.github.pixee.security.BoundedLineReader;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
@@ -57,7 +58,7 @@ public enum SimpleHttpService implements HttpService {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(io));
                 StringBuilder respStr = new StringBuilder();
                 String line;
-                while ((line = reader.readLine()) != null) {
+                while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                     respStr.append(line);
                 }
                 return respStr.length() == 0 ? "200 OK" : respStr.toString();
