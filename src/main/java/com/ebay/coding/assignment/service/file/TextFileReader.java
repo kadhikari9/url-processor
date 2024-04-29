@@ -1,6 +1,7 @@
 package com.ebay.coding.assignment.service.file;
 
 import com.ebay.coding.assignment.util.PropertyUtil;
+import io.github.pixee.security.BoundedLineReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +35,7 @@ public enum TextFileReader implements FileReader {
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 result.add(line);
             }
             return result;
