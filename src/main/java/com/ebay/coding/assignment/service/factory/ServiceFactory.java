@@ -33,10 +33,10 @@ public enum ServiceFactory {
     }
 
     public Processor getFileProcessor(String type) {
-        if (type.equalsIgnoreCase("file")) {
+        if ("file".equalsIgnoreCase(type)) {
             return new AsyncFileProcessor(TextFileReader.INSTANCE, fileProcessingQueue, urlProcessingQueue, deadLetterQueue);
         }
-        if (type.equalsIgnoreCase("directory")) {
+        if ("directory".equalsIgnoreCase(type)) {
             return new AsyncDirectoryProcessor(TextFileReader.INSTANCE, fileProcessingQueue);
         }
 
@@ -44,7 +44,7 @@ public enum ServiceFactory {
     }
 
     public UrlProcessor getUrlProcessor(String type) {
-        if (type.equalsIgnoreCase("http")) {
+        if ("http".equalsIgnoreCase(type)) {
             return new SimpleUrlProcessor(urlProcessingQueue, deadLetterQueue, SimpleHttpService.INSTANCE);
         } else {
             throw new UnsupportedOperationException("Unsupported url processor type ");
